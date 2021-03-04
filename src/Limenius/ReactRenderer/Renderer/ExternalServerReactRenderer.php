@@ -70,6 +70,10 @@ class ExternalServerReactRenderer extends AbstractReactRenderer
 
         fclose($sock);
 
+        if (false !== $uncompressedContents = \gzdecode($contents)) {
+            $contents = $uncompressedContents;
+        }
+
         $result = json_decode($contents, true);
         if ($result['hasErrors']) {
             $this->logErrors($result['consoleReplayScript']);
